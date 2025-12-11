@@ -26,6 +26,10 @@ Repository of Ansible roles used to install, repair, and remove Windows client s
 - Store vendor installers in `files/Files` to ensure PSADT can locate the payload during execution.
 - Keep the role-specific README current with any additional prerequisites, silent switches, or known issues.
 
+## Credits
+- Based on deployment processes published by Jason Berger at [Silent Install HQ](https://silentinstallhq.com/).
+- Uses the [PowerShell App Deployment Toolkit](https://github.com/PSAppDeployToolkit/PSAppDeployToolkit) (PSADT) to orchestrate Windows software installations.
+
 ## Checklist for Adding New Software
 - Create a new role by copying `win-template/` or using `ansible-galaxy init` to match the existing layout.
 - Document role variables, deployment types, and required files in a role-specific README.
