@@ -45,6 +45,12 @@ Example Playbook
         deployment_type: install
 ```
 
+Get installation files
+----------------------
+
+To obtain the Notepad++ installer, download the latest `.exe` file from the [official Notepad++ website](https://notepad-plus-plus.org/downloads/). Place the installer in the PSADT directory on your ansible host (`win-notepad++/files/Files`). The deployment role will locate and execute the installer from this path during the installation process.
+
+
 License
 -------
 
