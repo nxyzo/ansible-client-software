@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended"
   ],
+  "onboarding": false,
   "regexManagers": [
     {
       "customType": "regex",
