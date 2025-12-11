@@ -3,10 +3,11 @@
   "extends": [
     "config:recommended"
   ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [
-        "^win-notepad\\+\\+/defaults/main\\.yml$"
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^win-notepad\\+\\+/defaults/main\\.yml$/"
       ],
       "matchStrings": [
         "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\"?"
