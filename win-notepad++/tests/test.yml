@@ -2,4 +2,7 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - win-notepad++
+    - role: win-notepad++
+      vars:
+        # Defines the action to perform for this software package: install, repair, or uninstall
+        deployment_type: install
