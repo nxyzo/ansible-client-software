@@ -2,5 +2,17 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "^win-notepad\\+\\+/defaults/main\\.yml$"
+      ],
+      "matchStrings": [
+        "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\"?"
+      ],
+      "depNameTemplate": "notepad-plus-plus/notepad-plus-plus",
+      "datasourceTemplate": "github-releases"
+    }
   ]
 }
