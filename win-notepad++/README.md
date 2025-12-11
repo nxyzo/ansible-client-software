@@ -1,38 +1,56 @@
 Role Name
 =========
 
-A brief description of the role goes here.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+Ansible Role Wrapper for Notepad++ Install and Uninstall (PSADT v4) from Jason Berger
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- `package_name`  
+  Name of the software package and folder inside the software repository.  
+  **Default:** `Notepad++`  
+  **Used for:** Building `package_source_path` and detection/installation paths.
 
-Dependencies
-------------
+- `software_deployment_root`  
+  Root folder of the local software deployment structure on the target host.  
+  **Default:** `C:\SWSETUP\softwareDeployment`  
+  **Used for:** Building `software_repository_path`.
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+- `software_repository_path`  
+  Path to the local software repository that contains all package folders.  
+  **Default:** `{{ software_deployment_root }}\\ansibleRepository`  
+  **Used for:** Building `package_source_path`. Normally not overridden unless your layout differs.
+
+- `package_source_path`  
+  Path to the source folder of the current software package on the target host.  
+  **Default:** `{{ software_repository_path }}\\{{ package_name }}`  
+  **Note:** This is a derived variable and usually not set directly; it is used by tasks to locate scripts and installers.
+
+- `deployment_type`  
+  Defines the action to perform for this software package. Typical values are `install`, `repair`, or `uninstall`.  
+  **Default:** `install`  
+  **Used for:** Controlling which deployment path is executed inside the role (e.g. installation vs. uninstallation logic).
+
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+```yml
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: win-notepad++
+      vars:
+        # Defines the action to perform for this software package: install, repair, or uninstall
+        deployment_type: install
+```
 
 License
 -------
 
-BSD
+MIT
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+Author: Philipp Ruland
