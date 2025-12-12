@@ -16,7 +16,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^win-7zip\\/defaults\\/main\\.yml$/"
+        "/^win-7zip/defaults/main\\.yml$/"
       ],
       "matchStrings": [
         "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,5})\"?"
