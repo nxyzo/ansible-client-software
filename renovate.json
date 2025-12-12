@@ -4,25 +4,22 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^win-notepad\\+\\+/defaults/main\\.yml$/"
-      ],
+      "managerFilePatterns": ["/^win-notepad\\+\\+/defaults/main\\.yml$/"],
       "matchStrings": [
-        "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\"?"
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,5})\"?"
       ],
       "depNameTemplate": "notepad-plus-plus/notepad-plus-plus",
       "datasourceTemplate": "github-releases"
     },
     {
       "customType": "regex",
-      "managerFilePatterns": [
-        "/^win-7zip/defaults/main\\.yml$/"
-      ],
+      "managerFilePatterns": ["/^win-7zip\\/defaults\\/main\\.yml$/"],
       "matchStrings": [
-        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,5})\"?"
+        "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+)(?:\\.\\d+\\.\\d+)?\"?"
       ],
       "depNameTemplate": "ip7z/7zip",
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-releases",
+      "autoReplaceStringTemplate": "latest_version: \"{{newValue}}.00.0\""
     }
   ]
 }
