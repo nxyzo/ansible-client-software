@@ -19,7 +19,7 @@
         "/^win-7zip\\/defaults\\/main\\.yml$/"
       ],
       "matchStrings": [
-        "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+(?:\\.\\d+)?)\"?"
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,5})\"?"
       ],
       "depNameTemplate": "ip7z/7zip",
       "datasourceTemplate": "github-releases"
