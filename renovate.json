@@ -19,6 +19,7 @@
       ],
       "depNameTemplate": "ip7z/7zip",
       "datasourceTemplate": "github-releases",
+      "versioningTemplate": "loose",
       "autoReplaceStringTemplate": "latest_version: \"{{newValue}}.00.0\""
     }
   ]
