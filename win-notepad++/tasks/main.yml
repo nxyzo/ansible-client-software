@@ -1,6 +1,16 @@
 ---
 # tasks file for win-notepad++
 
+- name: Repair
+  include_tasks: repair.yml
+  when: (deployment_type) == 'repair'
+  tags: [repair]
+
+- name: Uninstall
+  include_tasks: uninstall.yml
+  when: (deployment_type) == 'uninstall'
+  tags: [uninstall]
+
 - name: Create local package repository
   win_file:
     path: "{{ package_source_path }}"
@@ -15,13 +25,3 @@
   include_tasks: install.yml
   when: (deployment_type) == 'install'
   tags: [install]
-
-- name: Repair
-  include_tasks: repair.yml
-  when: (deployment_type) == 'repair'
-  tags: [repair]
-
-- name: Uninstall
-  include_tasks: uninstall.yml
-  when: (deployment_type) == 'uninstall'
-  tags: [uninstall]
