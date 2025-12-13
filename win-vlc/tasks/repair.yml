@@ -1,0 +1,9 @@
+# tasks file for win-vlc
+---
+- name: Start silent repair
+  win_shell: |
+    & "{{ package_source_path }}\Invoke-AppDeployToolkit.exe" `
+      -DeploymentType Repair `
+      -DeployMode Silent
+  register: deploy_result
+  failed_when: deploy_result.rc not in [0, 3010]

@@ -1,0 +1,7 @@
+If([String](Get-Item -Path "$Env:ProgramFiles\VideoLAN\VLC\vlc.exe","${Env:ProgramFiles(x86)}\VideoLAN\VLC\vlc.exe" -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge "{{ latest_version }}") {
+Write-Host "Installed"
+Exit 0
+}
+else {
+Exit 1
+}

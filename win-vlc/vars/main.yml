@@ -1,0 +1,14 @@
+---
+# vars file for win-vlc
+
+# Name of the software package (used as folder name in the repository)
+package_name: vlc
+
+# Root folder of the software deployment structure
+software_deployment_root: !unsafe C:\SWSETUP\softwareDeployment
+
+# Path to the Ansible software repository
+software_repository_path: "{{ software_deployment_root }}\\ansibleRepository"
+
+# Path to the source folder of the current software package
+package_source_path: "{{ software_repository_path }}\\{{ package_name }}"
