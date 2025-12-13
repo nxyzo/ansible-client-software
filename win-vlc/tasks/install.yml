@@ -21,3 +21,25 @@
   register: deploy_result
   failed_when: deploy_result.rc not in [0, 3010]
   when: detect.rc == 1
+
+- name: Create VLC custom configuration directory
+  win_file:
+    path: "C:\\Users\\Default\\AppData\\Roaming\\vlc"
+    state: directory
+
+- name: Get all Users on the system
+  win_shell: |
+    $users = Get-ChildItem 'C:\Users' | Where-Object {
+      $_.PSIsContainer
+    }
+    $users | ForEach-Object { $_.FullName }
+  register: all_users
+  when: custom_config | default(false)
+
+- name: Copy custom configuration to all user profiles
+  win_copy:
+    src: "../files/vlc-config/*"
+    dest: "{{ item }}\\AppData\\Roaming\\vlc\\"
+    force: yes
+  loop: "{{ all_users.stdout_lines }}"
+  when: custom_config | default(false)
