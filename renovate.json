@@ -39,14 +39,14 @@
         "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+)*)\"?"
       ],
       "depNameTemplate": "winscp/winscp",
-      "datasourceTemplate": "github-releases",
+      "datasourceTemplate": "github-tags",
       "versioningTemplate": "loose"
     }
   ],
   "packageRules": [
     {
       "matchDatasources": ["github-tags"],
-      "matchPackageNames": ["videolan/vlc"],
+      "matchPackageNames": ["videolan/vlc", "winscp/winscp"],
       "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
     }
   ]
