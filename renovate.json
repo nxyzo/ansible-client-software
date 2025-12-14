@@ -36,7 +36,7 @@
       "customType": "regex",
       "managerFilePatterns": ["/^win-winscp\\/defaults\\/main\\.yml$/"],
       "matchStrings": [
-        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){2,3})\"?"
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+)*)\"?"
       ],
       "depNameTemplate": "winscp/winscp",
       "datasourceTemplate": "github-releases",
