@@ -30,6 +30,17 @@
       ],
       "depNameTemplate": "videolan/vlc",
       "datasourceTemplate": "github-tags",
+      "versioningTemplate": "loose",
+      "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^win-winscp\\/defaults\\/main\\.yml$/"],
+      "matchStrings": [
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){2,3})\"?"
+      ],
+      "depNameTemplate": "winscp/winscp",
+      "datasourceTemplate": "github-releases",
       "versioningTemplate": "loose"
     },
     {
