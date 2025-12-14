@@ -11,6 +11,10 @@ Role Variables
   **Default:** `Notepad++`  
   **Used for:** Building `package_source_path` and detection/installation paths.
 
+- `latest_version`
+  The latest software release version.
+  **Used for:** Building detection script.
+
 - `software_deployment_root`  
   Root folder of the local software deployment structure on the target host.  
   **Default:** `C:\SWSETUP\softwareDeployment`  
