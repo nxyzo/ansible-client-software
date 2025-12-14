@@ -1,6 +1,8 @@
-#SPDX-License-Identifier: MIT-0
 ---
 - hosts: localhost
   remote_user: root
   roles:
-    - win-winscp
+    - role: win-winscp
+      vars:
+        # Defines the action to perform for this software package: install, repair, or uninstall
+        deployment_type: install
