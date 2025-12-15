@@ -1,0 +1,5 @@
+---
+# defaults file for win-vlc
+latest_version: "3.0.22"
+# Set to true to deploy custom VLC configuration to all user profiles and also to new users
+custom_config: false

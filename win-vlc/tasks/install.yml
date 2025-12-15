@@ -1,0 +1,45 @@
+---
+# tasks file for win-vlc
+
+- name: Generate detect-installation script
+  template:
+    src: detect-installation.ps1.j2
+    dest: "{{ package_source_path }}\\detect-installation.ps1"
+
+- name: Detect installation
+  win_shell: >
+    powershell.exe -ExecutionPolicy Bypass -File
+    "{{ package_source_path }}\detect-installation.ps1"
+  register: detect
+  failed_when: detect.rc not in [0, 1]
+
+- name: Start silent install
+  win_shell: |
+    & "{{ package_source_path }}\Invoke-AppDeployToolkit.exe" `
+      -DeploymentType Install `
+      -DeployMode Silent
+  register: deploy_result
+  failed_when: deploy_result.rc not in [0, 3010]
+  when: detect.rc == 1
+
+- name: Create VLC custom configuration directory
+  win_file:
+    path: "C:\\Users\\Default\\AppData\\Roaming\\vlc"
+    state: directory
+
+- name: Get all Users on the system
+  win_shell: |
+    $users = Get-ChildItem 'C:\Users' | Where-Object {
+      $_.PSIsContainer
+    }
+    $users | ForEach-Object { $_.FullName }
+  register: all_users
+  when: custom_config | default(false)
+
+- name: Copy custom configuration to all user profiles
+  win_copy:
+    src: "../files/vlc-config/*"
+    dest: "{{ item }}\\AppData\\Roaming\\vlc\\"
+    force: yes
+  loop: "{{ all_users.stdout_lines }}"
+  when: custom_config | default(false)

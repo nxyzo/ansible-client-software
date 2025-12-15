@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Philipp Ruland
+  description: Ansible Role Wrapper for VLC Media Player Install and Uninstall (PSADT v4) from Jason Berger
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  galaxy_tags: []
+    - windows
+    - install
+    - update
+    - vlc
+    - video
+    - media

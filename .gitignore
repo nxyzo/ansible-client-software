@@ -1,5 +1,3 @@
-**files/Invoke-AppDeployToolkit.exe
-*.exe
 *.dll
 *.msi
 *.msix
