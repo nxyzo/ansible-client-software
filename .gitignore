@@ -1,3 +1,5 @@
 *.dll
 *.msi
 *.msix
+*.exe
+!Invoke-AppDeployToolkit.exe
