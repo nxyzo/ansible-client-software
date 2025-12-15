@@ -1,4 +1,4 @@
-!Invoke-AppDeployToolkit.exe
+**files/Invoke-AppDeployToolkit.exe
 *.exe
 *.dll
 *.msi
