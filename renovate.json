@@ -70,7 +70,9 @@
     },
     {
       "customType": "regex",
-      "managerFilePatterns": ["/^win-adobe-reader\\/defaults\\/main\\.yml$/"],
+      "managerFilePatterns": [
+        "/^win-adobereader\\/defaults\\/main\\.yml$/"
+      ],
       "matchStrings": [
         "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\.\\d+\"?"
       ],
