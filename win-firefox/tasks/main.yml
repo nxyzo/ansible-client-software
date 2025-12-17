@@ -1,0 +1,45 @@
+---
+# tasks file for win-firefox
+
+- name: Repair
+  include_tasks: repair.yml
+  when: (deployment_type) == 'repair'
+  tags: [repair]
+
+- name: Uninstall
+  include_tasks: uninstall.yml
+  when: (deployment_type) == 'uninstall'
+  tags: [uninstall]
+
+- name: Create local package repository
+  win_file:
+    path: "{{ package_source_path }}"
+    state: directory
+  when: (deployment_type) == 'install'
+  tags: [install]
+
+- name: Remove Files folder
+  ansible.windows.win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: absent
+  when: (deployment_type) == 'install'
+  tags: [install]
+
+- name: Recreate Files folder
+  ansible.windows.win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: directory
+  when: (deployment_type) == 'install'
+  tags: [install]
+
+- name: Copy files to local package repository
+  win_copy:
+    src: "../files/"
+    dest: "{{ package_source_path }}"
+  when: (deployment_type) == 'install'
+  tags: [install]
+
+- name: Install
+  include_tasks: install.yml
+  when: (deployment_type) == 'install'
+  tags: [install]

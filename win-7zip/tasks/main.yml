@@ -15,16 +15,29 @@
   win_file:
     path: "{{ package_source_path }}"
     state: directory
+  when: (deployment_type) == 'install'
+  tags: [install]
 
-- name: delete other software installers from local package repository
-  win_file:
-    path: "{{ package_source_path }}\\Files\\*"
+- name: Remove Files folder
+  ansible.windows.win_file:
+    path: "{{ package_source_path }}\\Files"
     state: absent
+  when: (deployment_type) == 'install'
+  tags: [install]
+
+- name: Recreate Files folder
+  ansible.windows.win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: directory
+  when: (deployment_type) == 'install'
+  tags: [install]
 
 - name: Copy files to local package repository
   win_copy:
     src: "../files/"
     dest: "{{ package_source_path }}"
+  when: (deployment_type) == 'install'
+  tags: [install]
 
 - name: Install
   include_tasks: install.yml
