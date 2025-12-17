@@ -7,6 +7,13 @@
       "transformTemplates": [
         "{\"releases\":[{\"version\": $string(LATEST_FIREFOX_VERSION),\"sourceUrl\":\"https://www.mozilla.org/firefox/\"}],\"homepage\":\"https://www.mozilla.org/firefox/\"}"
       ]
+    },
+    "adobeReader": {
+      "defaultRegistryUrlTemplate": "https://armmf.adobe.com/arm-manifests/mac/AcrobatDC/reader/current_version.txt",
+      "format": "plain",
+      "transformTemplates": [
+        "{\n  \"releases\": [\n    {\n      \"version\": $join([\n        $split($trim($), \".\")[0],\n        $string($number($split($trim($), \".\")[1])),\n        $split($trim($), \".\")[2],\n        \"0\"\n      ], \".\"),\n      \"sourceUrl\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n    }\n  ],\n  \"homepage\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n}"
+      ]
     }
   },
   "customManagers": [
@@ -67,8 +74,9 @@
       "matchStrings": [
         "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){3})\"?"
       ],
-      "depNameTemplate": "adobe-acrobat-reader-dc",
-      "datasourceTemplate": "repology",
+      "depNameTemplate": "Adobe Acrobat Reader DC",
+      "packageNameTemplate": "reader",
+      "datasourceTemplate": "custom.adobeReader",
       "versioningTemplate": "loose"
     }
   ],
@@ -79,8 +87,8 @@
       "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
     },
     {
-      "matchDatasources": ["repology"],
-      "matchPackageNames": ["adobe-acrobat-reader-dc"],
+      "matchDatasources": ["custom.adobeReader"],
+      "matchPackageNames": ["reader"],
       "allowedVersions": "/^\\d+(?:\\.\\d+){3}$/"
     }
   ]
