@@ -16,10 +16,15 @@
     path: "{{ package_source_path }}"
     state: directory
 
-- name: delete other software installers from local package repository
-  win_file:
-    path: "{{ package_source_path }}\\Files\\*"
+- name: Remove Files folder
+  ansible.windows.win_file:
+    path: "{{ package_source_path }}\\Files"
     state: absent
+
+- name: Recreate Files folder
+  ansible.windows.win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: directory
 
 - name: Copy files to local package repository
   win_copy:
