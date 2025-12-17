@@ -1,0 +1,4 @@
+---
+# tasks file for win-winscp
+# set the latest version of the software here
+latest_version: "6.5.5"
