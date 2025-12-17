@@ -5,7 +5,7 @@
     "firefox": {
       "defaultRegistryUrlTemplate": "https://product-details.mozilla.org/1.0/firefox_versions.json",
       "transformTemplates": [
-        "{\n  \"releases\": [\n    { \"version\": $$.(LATEST_FIREFOX_VERSION) }\n  ],\n  \"sourceUrl\": \"https://www.mozilla.org/firefox/\"\n}"
+        "{\"releases\":[{\"version\": $string(LATEST_FIREFOX_VERSION),\"sourceUrl\":\"https://www.mozilla.org/firefox/\"}],\"homepage\":\"https://www.mozilla.org/firefox/\"}"
       ]
     }
   },
