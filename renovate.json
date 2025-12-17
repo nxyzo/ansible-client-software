@@ -12,7 +12,7 @@
       "defaultRegistryUrlTemplate": "https://armmf.adobe.com/arm-manifests/mac/AcrobatDC/reader/current_version.txt",
       "format": "plain",
       "transformTemplates": [
-        "{\n  \"releases\": [\n    {\n      \"version\": $join([\n        $split($trim($), \".\")[0],\n        $string($number($split($trim($), \".\")[1])),\n        $split($trim($), \".\")[2],\n        \"0\"\n      ], \".\"),\n      \"sourceUrl\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n    }\n  ],\n  \"homepage\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n}"
+        "{\n  \"releases\": [\n    {\n      \"version\": (\n        $v := releases[0].version;\n        $join([\n          $split($v, \".\")[0],\n          $string($number($split($v, \".\")[1])),\n          $split($v, \".\")[2],\n          \"0\"\n        ], \".\")\n      ),\n      \"sourceUrl\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n    }\n  ],\n  \"homepage\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n}"
       ]
     }
   },
