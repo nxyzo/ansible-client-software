@@ -82,7 +82,21 @@
       "datasourceTemplate": "custom.adobeReader",
       "versioningTemplate": "loose",
       "autoReplaceStringTemplate": "latest_version: \"{{newValue}}.0\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|\\/)(Deploy-Application\\.ps1|AppDeployToolkitMain\\.ps1|AppDeployToolkitExtensions\\.ps1)$/"
+      ],
+      "matchStrings": [
+        "DeployAppScriptVersion\\s*=\\s*'(?<currentValue>\\d+(?:\\.\\d+){1,3})'"
+      ],
+      "depNameTemplate": "PSAppDeployToolkit/PSAppDeployToolkit",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "loose",
+      "autoReplaceStringTemplate": "DeployAppScriptVersion = '{{newValue}}'"
     }
+
   ],
   "packageRules": [
     {
