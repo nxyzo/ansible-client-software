@@ -1,6 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
+  "customDatasources": {
+    "firefox": {
+      "defaultRegistryUrlTemplate": "https://product-details.mozilla.org/1.0/firefox_versions.json",
+      "transformTemplates": [
+        "{\n  \"releases\": [\n    { \"version\": $$.(LATEST_FIREFOX_VERSION) }\n  ],\n  \"sourceUrl\": \"https://www.mozilla.org/firefox/\"\n}"
+      ]
+    }
+  },
   "customManagers": [
     {
       "customType": "regex",
@@ -40,6 +48,17 @@
       ],
       "depNameTemplate": "winscp/winscp",
       "datasourceTemplate": "github-tags",
+      "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^win-firefox\\/defaults\\/main\\.yml$/"],
+      "matchStrings": [
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
+      ],
+      "depNameTemplate": "firefox",
+      "packageNameTemplate": "firefox",
+      "datasourceTemplate": "custom.firefox",
       "versioningTemplate": "loose"
     }
   ],
