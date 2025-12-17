@@ -20,6 +20,7 @@
   win_file:
     path: "{{ package_source_path }}\\Files\\*"
     state: absent
+  ignore_errors: yes
 
 - name: Copy files to local package repository
   win_copy:
