@@ -12,7 +12,7 @@
       "defaultRegistryUrlTemplate": "https://armmf.adobe.com/arm-manifests/mac/AcrobatDC/reader/current_version.txt",
       "format": "plain",
       "transformTemplates": [
-        "{\n  \"releases\": [\n    {\n      \"version\": (\n        $v := releases[0].version;\n        $join([\n          $split($v, \".\")[0],\n          $string($number($split($v, \".\")[1])),\n          $split($v, \".\")[2],\n          \"0\"\n        ], \".\")\n      ),\n      \"sourceUrl\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n    }\n  ],\n  \"homepage\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n}"
+        "{\n  \"releases\": [\n    {\n      \"version\": (\n        $v := releases[0].version;\n        $join([\n          $split($v, \".\")[0],\n          $string($number($split($v, \".\")[1])),\n          $split($v, \".\")[2]\n        ], \".\")\n      ),\n      \"sourceUrl\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n    }\n  ],\n  \"homepage\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n}"
       ]
     }
   },
@@ -72,14 +72,15 @@
       "customType": "regex",
       "managerFilePatterns": ["/^win-adobe-reader\\/defaults\\/main\\.yml$/"],
       "matchStrings": [
-        "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+\\.\\d+\\.\\d+)\"?"
+        "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\.\\d+\"?"
       ],
+      "currentValueTemplate": "{{{currentValue}}}",
       "depNameTemplate": "Adobe Acrobat Reader DC",
       "packageNameTemplate": "reader",
       "datasourceTemplate": "custom.adobeReader",
-      "versioningTemplate": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\.(?<build>\\d+)$"
+      "versioningTemplate": "loose",
+      "autoReplaceStringTemplate": "latest_version: \"{{newValue}}.0\""
     }
-
   ],
   "packageRules": [
     {
@@ -90,7 +91,7 @@
     {
       "matchDatasources": ["custom"],
       "matchDepNames": ["Adobe Acrobat Reader DC"],
-      "allowedVersions": "/^\\d+(?:\\.\\d+){3}$/"
+      "allowedVersions": "/^\\d+(?:\\.\\d+){2}$/"
     }
   ]
 }
