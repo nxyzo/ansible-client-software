@@ -1,8 +1,8 @@
 ---
-# tasks file for win-<!-- SOFTWARE_NAME -->
+# tasks file for win-firefox
 
 # Name of the software package (used as folder name in the repository)
-package_name: 
+package_name: Firefox
 
 # Root folder of the software deployment structure
 software_deployment_root: !unsafe C:\SWSETUP\softwareDeployment
