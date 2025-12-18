@@ -1,0 +1,7 @@
+If([Version](Get-ItemPropertyValue -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Greenshot_is1','HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\Greenshot_is1' -Name DisplayVersion -ea SilentlyContinue) -ge '{{ latest_version }}') {
+Write-Host "Installed"
+Exit 0
+}
+else {
+Exit 1
+}
