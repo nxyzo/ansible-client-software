@@ -95,6 +95,18 @@
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "loose",
       "autoReplaceStringTemplate": "DeployAppScriptVersion = '{{newValue}}'"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^win-greenshot\\/defaults\\/main\\.yml$/"
+      ],
+      "matchStrings": [
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
+      ],
+      "depNameTemplate": "greenshot/greenshot",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "loose"
     }
   ],
   "packageRules": [
@@ -107,6 +119,11 @@
       "matchDatasources": ["custom"],
       "matchDepNames": ["Adobe Acrobat Reader DC"],
       "allowedVersions": "/^\\d+(?:\\.\\d+){2}$/"
+    },
+    {
+      "matchDatasources": ["github-releases"],
+      "matchPackageNames": ["greenshot/greenshot"],
+      "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
     }
   ]
 }
