@@ -1,0 +1,4 @@
+---
+# tasks file for win-chrome
+# set the latest version of the software here
+latest_version: "143.0.7499.170"
