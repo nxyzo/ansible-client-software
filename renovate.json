@@ -18,9 +18,9 @@
     "handbrake": {
       "defaultRegistryUrlTemplate": "https://api.github.com/repos/HandBrake/HandBrake/releases/latest",
       "transformTemplates": [
-        "{\"releases\":[{\"version\": $string(tag_name),\"sourceUrl\":\"https://handbrake.fr/\"}],\"homepage\":\"https://handbrake.fr/\"}"
+        "{\n  \"releases\": [\n    {\n      \"version\": $string(tag_name),\n      \"sourceUrl\": \"https://handbrake.fr/\"\n    }\n  ],\n  \"homepage\": \"https://handbrake.fr/\"\n}"
       ]
-  }
+    }
   },
   "customManagers": [
     {
