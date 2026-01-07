@@ -16,9 +16,9 @@
       ]
     },
     "handbrake": {
-      "defaultRegistryUrlTemplate": "https://api.github.com/repos/HandBrake/HandBrake/releases/latest",
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/HandBrake/HandBrake/releases",
       "transformTemplates": [
-        "{\n  \"releases\": [\n    {\n      \"version\": $string(tag_name),\n      \"sourceUrl\": \"https://handbrake.fr/\"\n    }\n  ],\n  \"homepage\": \"https://handbrake.fr/\"\n}"
+        "{\"releases\":[{\"version\": $string(LATEST_HANDSHAKE_VERSION),\"sourceUrl\":\"https://github.com/HandBrake/HandBrake/releases\"}],\"homepage\":\"https://handbrake.fr/\"}"
       ]
     }
   },
@@ -125,7 +125,17 @@
       "depNameTemplate": "HandBrake/HandBrake",
       "datasourceTemplate": "custom.handbrake",
       "versioningTemplate": "loose"
-    }
+    },
+    {
+    "customType": "regex",
+    "managerFilePatterns": ["/^win-handbrake\\/defaults\\/main\\.yml$/"],
+    "matchStrings": [
+      "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
+    ],
+    "depNameTemplate": "HandBrake/HandBrake",
+    "datasourceTemplate": "github-releases",
+    "versioningTemplate": "loose"
+    }  
   ],
   "packageRules": [
     {
