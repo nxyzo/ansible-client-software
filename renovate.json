@@ -14,6 +14,12 @@
       "transformTemplates": [
         "{\n  \"releases\": [\n    {\n      \"version\": (\n        $v := releases[0].version;\n        $join([\n          $split($v, \".\")[0],\n          $string($number($split($v, \".\")[1])),\n          $split($v, \".\")[2]\n        ], \".\")\n      ),\n      \"sourceUrl\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n    }\n  ],\n  \"homepage\": \"https://www.adobe.com/acrobat/pdf-reader.html\"\n}"
       ]
+    },
+    "handbrake": {
+      "defaultRegistryUrlTemplate": "https://api.github.com/repos/HandBrake/HandBrake/releases/latest",
+      "transformTemplates": [
+        "{\"releases\":[{\"version\": $string(tag_name),\"sourceUrl\":\"https://handbrake.fr/\"}],\"homepage\":\"https://handbrake.fr/\"}"
+      ]
     }
   },
   "customManagers": [
