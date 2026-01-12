@@ -19,14 +19,14 @@
   tags: [install]
 
 - name: Remove Files folder
-  ansible.windows.win_file:
+  win_file:
     path: "{{ package_source_path }}\\Files"
     state: absent
   when: (deployment_type) == 'install'
   tags: [install]
 
 - name: Recreate Files folder
-  ansible.windows.win_file:
+  win_file:
     path: "{{ package_source_path }}\\Files"
     state: directory
   when: (deployment_type) == 'install'

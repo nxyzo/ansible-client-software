@@ -26,6 +26,7 @@
   win_file:
     path: "C:\\Users\\Default\\AppData\\Roaming\\vlc"
     state: directory
+  when: custom_config | default(false)
 
 - name: Get all Users on the system
   win_shell: |
