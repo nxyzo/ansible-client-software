@@ -1,0 +1,23 @@
+---
+# tasks file for win-hpcmsl
+
+- name: Generate detect-installation script
+  template:
+    src: detect-installation.ps1.j2
+    dest: "{{ package_source_path }}\\detect-installation.ps1"
+
+- name: Detect installation
+  win_shell: >
+    powershell.exe -ExecutionPolicy Bypass -File
+    "{{ package_source_path }}\detect-installation.ps1"
+  register: detect
+  failed_when: detect.rc not in [0, 1]
+
+- name: Start silent install
+  win_shell: |
+    & "{{ package_source_path }}\Invoke-AppDeployToolkit.ps1" `
+      -DeploymentType Install `
+      -DeployMode Silent
+  register: deploy_result
+  failed_when: deploy_result.rc not in [0, 3010]
+  when: detect.rc == 1
