@@ -1,6 +1,6 @@
 galaxy_info:
   author: Philipp Ruland
-  description: your role description
+  description: Ansible Role Wrapper for HP-CMSL Install and Uninstall (PSADT v3) from Jason Berger
 
   license: MIT
 
@@ -11,5 +11,6 @@ galaxy_info:
     - windows
     - install
     - update
-    - <your tags>
-    - <your tags>
+    - powershell
+    - hp
+    - scripts
