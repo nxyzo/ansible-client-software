@@ -8,3 +8,4 @@
 *.ini
 Transforms/
 !Invoke-AppDeployToolkit.exe
+!Deploy-Application.exe
