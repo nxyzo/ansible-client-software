@@ -20,6 +20,12 @@
       "transformTemplates": [
         "{\"releases\":[{\"version\": $string(LATEST_HANDSHAKE_VERSION),\"sourceUrl\":\"https://github.com/HandBrake/HandBrake/releases/latest\"}],\"homepage\":\"https://handbrake.fr/\"}"
       ]
+    },
+    "chrome": {
+      "defaultRegistryUrlTemplate": "https://omahaproxy.appspot.com/all.json",
+      "transformTemplates": [
+        "{\n  \"releases\": [\n    {\n      \"version\": $string($filter($, function($v){$v.os=\"win\"})[0].versions[?channel=\"stable\"].current_version),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
+      ]
     }
   },
   "customManagers": [
@@ -125,7 +131,20 @@
       "depNameTemplate": "handBrake/handBrake",
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "loose"
-    }  
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^win-chrome\\/defaults\\/main\\.yml$/"
+      ],
+      "matchStrings": [
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
+      ],
+      "depNameTemplate": "google-chrome",
+      "packageNameTemplate": "chrome",
+      "datasourceTemplate": "custom.chrome",
+      "versioningTemplate": "loose"
+    }
   ],
   "packageRules": [
     {
@@ -141,6 +160,11 @@
     {
       "matchDatasources": ["github-releases"],
       "matchPackageNames": ["greenshot/greenshot"],
+      "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
+    },
+    {
+      "matchDatasources": ["custom"],
+      "matchDepNames": ["google-chrome"],
       "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
     }
   ]
