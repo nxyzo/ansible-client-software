@@ -13,9 +13,30 @@
   register: detect
   failed_when: detect.rc not in [0, 1]
 
+- name: Remove Files folder
+  win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: absent
+  when: detect.rc == 1
+  tags: [install]
+
+- name: Recreate Files folder
+  win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: directory
+  when: detect.rc == 1
+  tags: [install]
+
+- name: Copy files to local package repository
+  win_copy:
+    src: "../files/"
+    dest: "{{ package_source_path }}"
+  when: detect.rc == 1
+  tags: [install]
+
 - name: Start silent install
   win_shell: |
-    & "{{ package_source_path }}\Invoke-AppDeployToolkit.exe" `
+    & "{{ package_source_path }}\Invoke-AppDeployToolkit.ps1" `
       -DeploymentType Install `
       -DeployMode Silent
   register: deploy_result
