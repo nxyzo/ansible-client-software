@@ -22,9 +22,9 @@
       ]
     },
     "chrome": {
-      "defaultRegistryUrlTemplate": "https://omahaproxy.appspot.com/all.json",
+      "defaultRegistryUrlTemplate": "https://versionhistory.googleapis.com/v1/chrome/platforms/win/channels/stable/versions?pageSize=1&order_by=version%20desc",
       "transformTemplates": [
-        "{\n  \"releases\": [\n    {\n      \"version\": $string(\n        $[os = \"win\"].versions[channel = \"stable\"].current_version\n      ),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
+        "{\n  \"releases\": [\n    {\n      \"version\": $string(versions[0].version),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
       ]
     }
   },
