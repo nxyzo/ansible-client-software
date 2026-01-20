@@ -24,7 +24,7 @@
     "chrome": {
       "defaultRegistryUrlTemplate": "https://omahaproxy.appspot.com/all.json",
       "transformTemplates": [
-        "{\n  \"releases\": [\n    {\n      \"version\": $string($filter($, function($v){$v.os=\"win\"})[0].versions[?channel=\"stable\"].current_version),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
+        "{\n  \"releases\": [\n    {\n      \"version\": $string(\n        $[os = \"win\"].versions[channel = \"stable\"].current_version\n      ),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
       ]
     }
   },
