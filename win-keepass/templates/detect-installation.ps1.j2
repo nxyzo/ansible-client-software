@@ -1,0 +1,7 @@
+If([String](Get-Item -Path "$Env:ProgramFiles\KeePass Password Safe 2\KeePass.exe","${Env:ProgramFiles(x86)}\KeePass Password Safe 2\KeePass.exe" -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge "{{ latest_version }}"){
+Write-Host "Installed"
+Exit 0
+}
+else {
+Exit 1
+}
