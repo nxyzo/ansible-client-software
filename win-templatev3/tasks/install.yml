@@ -1,0 +1,45 @@
+---
+# tasks file for win-<!-- SOFTWARE_NAME -->
+
+
+- name: Generate detect-installation script
+  template:
+    src: detect-installation.ps1.j2
+    dest: "{{ package_source_path }}\\detect-installation.ps1"
+
+- name: Detect installation
+  win_shell: >
+    powershell.exe -ExecutionPolicy Bypass -File
+    "{{ package_source_path }}\detect-installation.ps1"
+  register: detect
+  failed_when: detect.rc not in [0, 1]
+
+- name: Remove Files folder
+  win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: absent
+  when: detect.rc == 1
+  tags: [install]
+
+- name: Recreate Files folder
+  win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: directory
+  when: detect.rc == 1
+  tags: [install]
+
+- name: Copy files to local package repository
+  win_copy:
+    src: "../files/"
+    dest: "{{ package_source_path }}"
+  when: detect.rc == 1
+  tags: [install]
+
+- name: Start silent install
+  win_shell: |
+    & "{{ package_source_path }}\Invoke-AppDeployToolkit.ps1" `
+      -DeploymentType Install `
+      -DeployMode Silent
+  register: deploy_result
+  failed_when: deploy_result.rc not in [0, 3010]
+  when: detect.rc == 1
