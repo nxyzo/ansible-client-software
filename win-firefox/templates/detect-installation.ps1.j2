@@ -1,0 +1,7 @@
+If([String](Get-Item -Path "$Env:ProgramFiles\Mozilla Firefox\firefox.exe","${Env:ProgramFiles(x86)}\Mozilla Firefox\firefox.exe" -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge "{{ latest_version }}"){
+Write-Host "Installed"
+Exit 0
+}
+else {
+Exit 1
+}

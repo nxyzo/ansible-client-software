@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: win-greenshot
+      vars:
+        # Defines the action to perform for this software package: install, repair, or uninstall
+        deployment_type: install

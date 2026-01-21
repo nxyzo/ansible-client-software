@@ -1,0 +1,16 @@
+galaxy_info:
+  author: Philipp Ruland
+  description: Ansible Role Wrapper for Google Chrome Install and Uninstall (PSADT v3) from Jason Berger
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+
+  galaxy_tags:
+    - windows
+    - install
+    - update
+    - chrome
+    - google
+    - browser

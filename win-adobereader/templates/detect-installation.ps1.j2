@@ -1,0 +1,7 @@
+If([String](Get-Item -Path "$Env:ProgramFiles\Adobe\Acrobat DC\Acrobat\Acrobat.exe","${Env:ProgramFiles(x86)}\Adobe\Acrobat DC\Acrobat\Acrobat.exe" -ErrorAction SilentlyContinue).VersionInfo.FileVersion -ge "{{ latest_version }}"){
+Write-Host "Installed"
+Exit 0
+}
+else {
+Exit 1
+}

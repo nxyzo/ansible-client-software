@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Philipp Ruland
+  description: Ansible Role Wrapper for Greenshot Install and Uninstall (PSADT v4) from Jason Berger
+
+  license: MIT
+
+  min_ansible_version: 2.9
+
+  # If this a Container Enabled role, provide the minimum Ansible Container version.
+  # min_ansible_container_version:
+
+  galaxy_tags:
+    - windows
+    - install
+    - update
+    - greenshot
+    - screenshot

@@ -1,3 +1,11 @@
 *.dll
 *.msi
 *.msix
+*.exe
+*.msp
+*.INI
+*.cab
+*.ini
+Transforms/
+!Invoke-AppDeployToolkit.exe
+!Deploy-Application.exe
