@@ -1,3 +1,4 @@
-#SPDX-License-Identifier: MIT-0
 ---
-# defaults file for win-keepass
+# tasks file for win-keepass
+# set the latest version of the software here
+latest_version: "2.60.0"
