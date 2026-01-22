@@ -176,7 +176,25 @@ Try {
         Copy-Item -Path "$dirSupportFiles\KeePass.config.enforced.xml" -Destination "$envProgramFilesX86\KeePass Password Safe 2\" -Force -ErrorAction SilentlyContinue
         }
         }
-                     
+
+
+        # Copy KeePass Languagefiles (*.lngx)
+        if (-not (Test-Path -Path "$env:ProgramFiles\KeePass Password Safe 2\Languages")) {
+        New-Item -ItemType Directory -Path "$env:ProgramFiles\KeePass Password Safe 2\Languages" -Force
+        }
+        Write-Log -Message "Copy KeePass Languagefiles (*.lngx)"
+        Get-ChildItem -Path $dirSupportFiles -Filter "*.lngx" -File | ForEach-Object {
+        Copy-Item -Path $_.FullName -Destination "$env:ProgramFiles\KeePass Password Safe 2\Languages" -Force -ErrorAction SilentlyContinue
+        }
+
+        if (-not (Test-Path -Path "$envProgramFilesX86\KeePass Password Safe 2\Languages")) {
+        New-Item -ItemType Directory -Path "$envProgramFilesX86\KeePass Password Safe 2\Languages" -Force
+        }
+        Write-Log -Message "Copy KeePass Languagefiles (*.lngx)"
+        Get-ChildItem -Path $dirSupportFiles -Filter "*.lngx" -File | ForEach-Object {
+        Copy-Item -Path $_.FullName -Destination "$env:ProgramFiles\KeePass Password Safe 2\Languages" -Force -ErrorAction SilentlyContinue
+        }
+                            
         ##*===============================================
         ##* POST-INSTALLATION
         ##*===============================================

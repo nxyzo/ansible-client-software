@@ -6,6 +6,7 @@
 *.INI
 *.cab
 *.ini
+*.lngx
 Transforms/
 !Invoke-AppDeployToolkit.exe
 !Deploy-Application.exe
