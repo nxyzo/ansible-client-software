@@ -26,14 +26,7 @@
       "transformTemplates": [
         "{\n  \"releases\": [\n    {\n      \"version\": $string(versions[0].version),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
       ]
-    },
-    "keepass": {
-      "defaultRegistryUrlTemplate": "https://sourceforge.net/p/keepass/news/feed",
-      "transformTemplates": [
-        "{\n  \"releases\": [\n    {\n      \"version\": $string(\n        $substringBefore(\n          $substringAfter(\n            $filter(entries, function($e){\n              $contains($e.title, \"KeePass 2.\")\n            })[0].title,\n            \"KeePass \"\n          ),\n          \" released\"\n        )\n      ),\n      \"sourceUrl\": \"https://keepass.info/download.html\"\n    }\n  ],\n  \"homepage\": \"https://keepass.info/\"\n}"
-      ]
     }
-
   },
   "customManagers": [
     {
@@ -160,9 +153,10 @@
       "matchStrings": [
         "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,2})\"?"
       ],
-      "depNameTemplate": "keepass",
-      "packageNameTemplate": "keepass",
-      "datasourceTemplate": "custom.keepass",
+      "depNameTemplate": "KeePass",
+      "datasourceTemplate": "rss",
+      "registryUrlTemplate": "https://sourceforge.net/p/keepass/news/feed",
+      "extractVersionTemplate": "^KeePass (2\\.\\d+(?:\\.\\d+)?)",
       "versioningTemplate": "loose"
     }
 
