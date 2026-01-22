@@ -57,7 +57,7 @@ https://trials.adobe.com/AdobeProducts/APRO/Acrobat_HelpX/win32/Acrobat_DC_Web_x
 
 After downloading, extract the contents of the ZIP file. And place the Files in: win-adobereader/files/Files
 
-Ensure that AcroRead.mst remains in the folder. This is the CKonfig file for Adobe Reader. It disables auto updates. 
+Ensure that AcroRead.mst remains in the folder. This is the Config file for Adobe Reader. It disables auto updates. 
 
 Once extracted, the **Files** directory should contain a structure similar to the following:
 
