@@ -47,7 +47,7 @@ Example Playbook
 Get installation files
 ----------------------
 
-To obtain the 7-Zip installer, download the latest `.exe` file from the [official 7-Zip website](https://www.7-zip.org/download.html). Place the installer in the PSADT directory on your ansible host (`win-7-Zip/files/Files`). The deployment role will locate and execute the installer from this path during the installation process.
+To obtain the 7-Zip installer, download the latest `.exe` (32 and 64bit) file from the [official 7-Zip website](https://www.7-zip.org/download.html). Place the installer in the PSADT directory on your ansible host (`win-7-Zip/files/Files`). The deployment role will locate and execute the installer from this path during the installation process.
 
 License
 -------
