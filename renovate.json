@@ -144,6 +144,18 @@
       "packageNameTemplate": "chrome",
       "datasourceTemplate": "custom.chrome",
       "versioningTemplate": "loose"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^win-keepass\\/defaults\\/main\\.yml$/"
+      ],
+      "matchStrings": [
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
+      ],
+      "depNameTemplate": "dlech/KeePass2.x",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "loose"
     }
   ],
   "packageRules": [
@@ -159,7 +171,7 @@
     },
     {
       "matchDatasources": ["github-releases"],
-      "matchPackageNames": ["greenshot/greenshot"],
+      "matchPackageNames": ["greenshot/greenshot", "dlech/KeePass2.x"],
       "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
     },
     {
