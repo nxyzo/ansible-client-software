@@ -156,9 +156,10 @@
       "depNameTemplate": "keepass",
       "datasourceTemplate": "html",
       "registryUrlTemplate": "https://keepass.info/download.html",
-      "extractVersionTemplate": "<small>KeePass-(2\\.\\d+(?:\\.\\d+)?)-Setup\\.exe<\\/small>",
+      "extractVersion": "<small>KeePass-(2\\.\\d+(?:\\.\\d+)?)-Setup\\.exe<\\/small>",
       "versioningTemplate": "loose"
     }
+
 
   ],
   "packageRules": [
