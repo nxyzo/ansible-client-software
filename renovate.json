@@ -178,7 +178,8 @@
     {
       "matchDatasources": ["github-releases"],
       "matchDepNames": ["greenshot/greenshot"],
-      "extractVersion": "/^v(?<version>\\d+(?:\\.\\d+){1,3})$/",
+      "extractVersion": "/(?<version>\\d+(?:\\.\\d+){1,3})/",
+      "versioning": "loose",
       "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
     },
     {
