@@ -1,5 +1,5 @@
 ---
-# tasks file for win-<!-- SOFTWARE_NAME -->
+# tasks file for win-keepass
 
 
 - name: Generate detect-installation script
