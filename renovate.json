@@ -26,7 +26,14 @@
       "transformTemplates": [
         "{\n  \"releases\": [\n    {\n      \"version\": $string(versions[0].version),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
       ]
+    },
+    "keepass": {
+      "defaultRegistryUrlTemplate": "https://sourceforge.net/p/keepass/news/feed",
+      "transformTemplates": [
+        "{\n  \"releases\": [\n    {\n      \"version\": $string(\n        $substringBefore(\n          $substringAfter(\n            $filter(entries, function($e){\n              $contains($e.title, \"KeePass 2.\")\n            })[0].title,\n            \"KeePass \"\n          ),\n          \" released\"\n        )\n      ),\n      \"sourceUrl\": \"https://keepass.info/download.html\"\n    }\n  ],\n  \"homepage\": \"https://keepass.info/\"\n}"
+      ]
     }
+
   },
   "customManagers": [
     {
@@ -151,12 +158,14 @@
         "/^win-keepass\\/defaults\\/main\\.yml$/"
       ],
       "matchStrings": [
-        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,2})\"?"
       ],
-      "depNameTemplate": "dlech/KeePass2.x",
-      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "keepass",
+      "packageNameTemplate": "keepass",
+      "datasourceTemplate": "custom.keepass",
       "versioningTemplate": "loose"
     }
+
   ],
   "packageRules": [
     {
@@ -171,13 +180,18 @@
     },
     {
       "matchDatasources": ["github-releases"],
-      "matchPackageNames": ["greenshot/greenshot", "dlech/KeePass2.x"],
+      "matchPackageNames": ["greenshot/greenshot"],
       "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
     },
     {
       "matchDatasources": ["custom"],
       "matchDepNames": ["google-chrome"],
       "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
+    },
+    {
+      "matchDatasources": ["custom"],
+      "matchDepNames": ["keepass"],
+      "allowedVersions": "/^2\\.\\d+(?:\\.\\d+)?$/"
     }
   ]
 }
