@@ -26,6 +26,11 @@
       "transformTemplates": [
         "{\n  \"releases\": [\n    {\n      \"version\": $string(versions[0].version),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
       ]
+    },
+    "keepass": {
+      "defaultRegistryUrlTemplate": "https://keepass.info/download.html",
+      "format": "html",
+      "extractVersion": "<small>KeePass-(2\\.\\d+(?:\\.\\d+)?)-Setup\\.exe<\\/small>"
     }
   },
   "customManagers": [
