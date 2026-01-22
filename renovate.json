@@ -151,12 +151,12 @@
         "/^win-keepass\\/defaults\\/main\\.yml$/"
       ],
       "matchStrings": [
-        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,2})\"?"
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
       ],
-      "depNameTemplate": "KeePass",
-      "datasourceTemplate": "rss",
-      "registryUrlTemplate": "https://sourceforge.net/p/keepass/news/feed",
-      "extractVersionTemplate": "^KeePass (2\\.\\d+(?:\\.\\d+)?)",
+      "depNameTemplate": "keepass",
+      "datasourceTemplate": "html",
+      "registryUrlTemplate": "https://keepass.info/download.html",
+      "extractVersionTemplate": "<small>KeePass-(2\\.\\d+(?:\\.\\d+)?)-Setup\\.exe<\\/small>",
       "versioningTemplate": "loose"
     }
 
