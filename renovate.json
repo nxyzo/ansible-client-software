@@ -27,10 +27,10 @@
         "{\n  \"releases\": [\n    {\n      \"version\": $string(versions[0].version),\n      \"sourceUrl\": \"https://www.google.com/chrome/\"\n    }\n  ],\n  \"homepage\": \"https://www.google.com/chrome/\"\n}"
       ]
     },
+
     "keepass": {
       "defaultRegistryUrlTemplate": "https://keepass.info/download.html",
-      "format": "html",
-      "extractVersion": "<small>KeePass-(2\\.\\d+(?:\\.\\d+)?)-Setup\\.exe<\\/small>"
+      "format": "html"
     }
   },
   "customManagers": [
@@ -128,7 +128,7 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-         "/^win-handbrake\\/defaults\\/main\\.yml$/"
+        "/^win-handbrake\\/defaults\\/main\\.yml$/"
       ],
       "matchStrings": [
         "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
@@ -137,6 +137,19 @@
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "loose"
     },
+
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^win-keepass\\/defaults\\/main\\.yml$/"],
+      "matchStrings": [
+        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
+      ],
+      "depNameTemplate": "keepass",
+      "packageNameTemplate": "keepass",
+      "datasourceTemplate": "custom.keepass",
+      "versioningTemplate": "loose"
+    },
+
     {
       "customType": "regex",
       "managerFilePatterns": [
@@ -149,23 +162,7 @@
       "packageNameTemplate": "chrome",
       "datasourceTemplate": "custom.chrome",
       "versioningTemplate": "loose"
-    },
-    {
-      "customType": "regex",
-      "managerFilePatterns": [
-        "/^win-keepass\\/defaults\\/main\\.yml$/"
-      ],
-      "matchStrings": [
-        "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
-      ],
-      "depNameTemplate": "keepass",
-      "datasourceTemplate": "html",
-      "registryUrlTemplate": "https://keepass.info/download.html",
-      "extractVersion": "<small>KeePass-(2\\.\\d+(?:\\.\\d+)?)-Setup\\.exe<\\/small>",
-      "versioningTemplate": "loose"
     }
-
-
   ],
   "packageRules": [
     {
@@ -188,10 +185,11 @@
       "matchDepNames": ["google-chrome"],
       "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
     },
+
     {
-      "matchDatasources": ["custom"],
-      "matchDepNames": ["keepass"],
-      "allowedVersions": "/^2\\.\\d+(?:\\.\\d+)?$/"
+      "matchDatasources": ["custom.keepass"],
+      "extractVersion": "/KeePass-(?<version>\\d+\\.\\d+(?:\\.\\d+)?)(?:(?:-Setup)?\\.(?:exe|zip|msi))/",
+      "allowedVersions": "/^\\d+\\.\\d+(?:\\.\\d+)?$/"
     }
   ]
 }
