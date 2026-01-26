@@ -122,8 +122,10 @@
         "latest_version:\\s*\"?(?<currentValue>\\d+(?:\\.\\d+){1,3})\"?"
       ],
       "depNameTemplate": "greenshot/greenshot",
+      "packageNameTemplate": "greenshot/greenshot",
       "datasourceTemplate": "github-releases",
-      "versioningTemplate": "loose"
+      "versioningTemplate": "loose",
+      "extractVersionTemplate": "/(?<version>\\d+\\.\\d+\\.\\d+)/"
     },
     {
       "customType": "regex",
@@ -177,10 +179,9 @@
     },
     {
       "matchDatasources": ["github-releases"],
-      "matchDepNames": ["greenshot/greenshot"],
-      "extractVersion": "/(?<version>\\d+(?:\\.\\d+){1,3})/",
-      "versioning": "loose",
-      "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/"
+      "matchPackageNames": ["greenshot/greenshot"],
+      "allowedVersions": "/^\\d+(?:\\.\\d+){1,3}$/",
+      "versioning": "loose"
     },
     {
       "matchDatasources": ["custom"],
