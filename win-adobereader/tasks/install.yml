@@ -33,6 +33,7 @@
     dest: "{{ package_source_path }}"
   when: detect.rc == 1
   tags: [install]
+  throttle: 3
 
 - name: Start silent install
   win_shell: |
