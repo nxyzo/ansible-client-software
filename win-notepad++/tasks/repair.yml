@@ -1,7 +1,7 @@
-# tasks file for win-notepad++
+# tasks file for win-notepadd++
 - name: Start silent repair
   win_shell: |
-    & "{{ package_source_path }}\Invoke-AppDeployToolkit.exe" `
+    & "{{ package_source_path }}\Deploy-Application.ps1" `
       -DeploymentType Repair `
       -DeployMode Silent
   register: deploy_result
