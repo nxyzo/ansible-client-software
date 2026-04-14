@@ -1,7 +1,7 @@
 Role Name
 =========
 
-Ansible Role Wrapper for Adobe Reader Install and Uninstall (PSADT v4) from Jason Berger
+Ansible Role Wrapper for Adobe Acrobat Install and Uninstall (PSADT v4) from Jason Berger
 
 Role Variables
 --------------
@@ -43,7 +43,7 @@ Example Playbook
 - hosts: localhost
   remote_user: root
   roles:
-    - role: win-adobereader
+    - role: win-adobe-acrobat
       vars:
         # Defines the action to perform for this software package: install, repair, or uninstall
         deployment_type: install
@@ -55,7 +55,7 @@ Get installation files
 To obtain the Adobe Acrobat installer, download the installation package from the following URL:  
 https://trials.adobe.com/AdobeProducts/APRO/Acrobat_HelpX/win32/Acrobat_DC_Web_x64_WWMUI.zip
 
-After downloading, extract the contents of the ZIP file. And place the Files in: win-adobereader/files/Files
+After downloading, extract the contents of the ZIP file. And place the Files in: win-adobe-acrobat/files/Files
 
 Ensure that AcroRead.mst remains in the folder. This is the Config file for Adobe Reader. It disables auto updates. 
 

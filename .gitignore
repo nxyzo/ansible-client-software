@@ -10,3 +10,4 @@
 Transforms/
 !Invoke-AppDeployToolkit.exe
 !Deploy-Application.exe
+win-office365
