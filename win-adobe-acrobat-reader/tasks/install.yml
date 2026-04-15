@@ -1,0 +1,97 @@
+---
+# tasks file for win-adobe-reader
+
+- name: Generate detect-installation script
+  win_template:
+    src: detect-installation.ps1.j2
+    dest: "{{ package_source_path }}\\detect-installation.ps1"
+
+- name: Detect installation
+  win_shell: >
+    powershell.exe -ExecutionPolicy Bypass -File
+    "{{ package_source_path }}\detect-installation.ps1"
+  register: detect
+  failed_when: detect.rc not in [0, 1]
+
+- name: Remove Files folder
+  win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: absent
+  when: detect.rc == 1
+  tags: [install]
+
+- name: Recreate Files folder
+  win_file:
+    path: "{{ package_source_path }}\\Files"
+    state: directory
+  when: detect.rc == 1
+  tags: [install]
+
+- name: Copy files from SMB share to local package repository
+  win_shell: |
+    robocopy "\\bprds\Repository\Ansible-Repo\Adobe-Acrobat-Reader" "{{ package_source_path }}" /E /R:1 /W:1 /NFL /NDL /NJH /NJS
+  register: robocopy_result
+  changed_when: robocopy_result.rc < 8
+  failed_when: robocopy_result.rc >= 8
+  when: detect.rc == 1
+  tags: [install]
+
+- name: Start silent install
+  win_shell: |
+    & "{{ package_source_path }}\Invoke-AppDeployToolkit.exe" `
+      -DeploymentType Install `
+      -DeployMode Silent
+  register: deploy_result
+  failed_when: deploy_result.rc not in [0, 3010]
+  when: detect.rc == 1
+
+- name: Detect installation after install
+  win_shell: >
+    powershell.exe -ExecutionPolicy Bypass -File
+    "{{ package_source_path }}\detect-installation.ps1"
+  register: detect_after
+  failed_when: detect_after.rc not in [0, 1]
+  when: detect.rc == 1
+
+- name: Show installation result
+  debug:
+    msg: >-
+      Adobe Reader ist {{
+      'installiert' if detect_after.rc == 0
+      else 'nicht installiert'
+      }}.
+  when: detect.rc == 1
+  failed_when: detect_after.rc != 0
+
+- name: Set Adobe Reader enterprise baseline under HKLM policies
+  ansible.windows.win_regedit:
+    path: "{{ item.path }}"
+    name: "{{ item.name }}"
+    data: "{{ item.data }}"
+    type: dword
+    state: present
+  loop:
+    # FeatureLockDown
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bProtectedMode",                    data: 1 }
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bEnableProtectedModeAppContainer",  data: 1 }
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bSuppressSignOut",                  data: 1 }
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bToggleFTE",                        data: 1 }
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bToggleToDoList",                   data: 1 }
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bToggleToDoTiles",                  data: 1 }
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bAcroSuppressUpsell",               data: 1 }
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bWhatsNewExp",                      data: 1 }
+    - { path: "{{ adobe_reader_featurelockdown_base }}", name: "bUpdater",                          data: 0 }
+
+    # cServices
+    - { path: "{{ adobe_reader_services_base }}", name: "bUpdater",                    data: 0 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bToggleAdobeDocumentServices",data: 1 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bToggleAdobeSign",            data: 1 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bToggleManageSign",           data: 1 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bTogglePrefsSync",            data: 1 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bToggleDocumentCloud",        data: 1 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bToggleWebConnectors",        data: 1 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bBoxConnectorEnabled",        data: 0 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bDropboxConnectorEnabled",    data: 0 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bGoogleDriveConnectorEnabled",data: 0 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bOneDriveConnectorEnabled",   data: 0 }
+    - { path: "{{ adobe_reader_services_base }}", name: "bToggleFillSign",             data: 1 }

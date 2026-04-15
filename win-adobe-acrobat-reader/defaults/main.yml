@@ -1,0 +1,12 @@
+---
+# defaults file for win-adobe-reader
+latest_version: "26.1.21411.0"
+
+adobe_reader_product_name: "Acrobat Reader"
+adobe_reader_version: "DC"
+
+adobe_reader_policy_base: >-
+  HKLM:\SOFTWARE\WOW6432Node\Policies\Adobe\{{ adobe_reader_product_name }}\{{ adobe_reader_version }}
+
+adobe_reader_featurelockdown_base: "{{ adobe_reader_policy_base }}\\FeatureLockDown"
+adobe_reader_services_base: "{{ adobe_reader_featurelockdown_base }}\\cServices"
