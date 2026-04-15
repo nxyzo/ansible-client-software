@@ -1,0 +1,38 @@
+# tasks file for win-adobereader
+- name: Generate detect-installation script
+  template:
+    src: detect-installation.ps1.j2
+    dest: "{{ package_source_path }}\\detect-installation.ps1"
+
+- name: Detect installation before uninstall
+  win_shell: >
+    powershell.exe -ExecutionPolicy Bypass -File
+    "{{ package_source_path }}\detect-installation.ps1"
+  register: deploy_result
+  failed_when: deploy_result.rc not in [0, 1]
+
+- name: Starte PSADT silent Uninstall
+  win_shell: |
+    & "{{ package_source_path }}\Invoke-AppDeployToolkit.exe" `
+      -DeploymentType Uninstall `
+      -DeployMode Silent
+  register: deploy_result
+  failed_when: deploy_result.rc not in [0, 3010]
+  when: deploy_result == 0
+
+- name: Detect installation after uninstall
+  win_shell: >
+    powershell.exe -ExecutionPolicy Bypass -File
+    "{{ package_source_path }}\detect-installation.ps1"
+  register: detect_after
+  failed_when: detect_after.rc not in [0, 1]
+  when: deploy_result == 0
+
+- name: Show installation result
+  debug:
+    msg: >-
+      Adobe Reader ist {{
+      'deinstalliert' if detect_after.rc == 1
+      else 'noch installiert'
+      }}.
+  when: deploy_result == 0
