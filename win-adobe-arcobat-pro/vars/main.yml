@@ -2,7 +2,7 @@
 # tasks file for win-adobereader
 
 # Name of the software package (used as folder name in the repository)
-package_name: Adobe-Reader
+package_name: Adobe-Acrobat-Pro
 
 # Root folder of the software deployment structure
 software_deployment_root: !unsafe C:\SWSETUP\softwareDeployment
