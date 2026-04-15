@@ -36,3 +36,13 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+
+Navigate to: https://get.adobe.com/reader/enterprise/
+Select an Operating System from the drop-down menu
+Select a Language from the drop-down menu
+Select a Version from the drop-down menu
+Click Download Now
+Download & Copy the 32-bit EXE to “C:\Temp\AcrobatReader\Files\”
+Download & Copy the 64-bit EXE to “C:\Temp\AcrobatReader\Files\”
+Replace the default Invoke-AppDeployToolkit.ps1 template with the script below
