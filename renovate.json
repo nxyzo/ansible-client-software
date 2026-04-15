@@ -93,7 +93,22 @@
     {
       "customType": "regex",
       "managerFilePatterns": [
-        "/^win-adobereader\\/defaults\\/main\\.yml$/"
+        "/^win-adobe-acrobat-reader\\/defaults\\/main\\.yml$/"
+      ],
+      "matchStrings": [
+        "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\.\\d+\"?"
+      ],
+      "currentValueTemplate": "{{{currentValue}}}",
+      "depNameTemplate": "Adobe Acrobat Reader DC",
+      "packageNameTemplate": "reader",
+      "datasourceTemplate": "custom.adobeReader",
+      "versioningTemplate": "loose",
+      "autoReplaceStringTemplate": "latest_version: \"{{newValue}}.0\""
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^win-adobe-arcobat-pro\\/defaults\\/main\\.yml$/"
       ],
       "matchStrings": [
         "latest_version:\\s*\"?(?<currentValue>\\d+\\.\\d+\\.\\d+)\\.\\d+\"?"
