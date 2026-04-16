@@ -102,6 +102,7 @@
     parameters:
       SoftwareName: "Adobe Acrobat"
   register: uninstall_result
+  failed_when: uninstall_result.rc not in [0, 3010]
   when: detect_before.rc == 0
 
 - name: Detect installation after registry uninstall
