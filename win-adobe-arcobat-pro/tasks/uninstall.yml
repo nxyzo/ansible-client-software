@@ -1,4 +1,5 @@
 # tasks file for win-adobereader
+
 - name: Generate detect-installation script
   template:
     src: detect-installation.ps1.j2
@@ -8,25 +9,159 @@
   win_shell: >
     powershell.exe -ExecutionPolicy Bypass -File
     "{{ package_source_path }}\detect-installation.ps1"
-  register: deploy_result
-  failed_when: deploy_result.rc not in [0, 1]
+  register: detect_before
+  failed_when: detect_before.rc not in [0, 1]
+
+- name: Deinstalliere Software per Registry-UninstallString
+  ansible.windows.win_powershell:
+    script: |
+      param(
+          [string]$SoftwareName
+      )
+
+      $uninstallPaths = @(
+          "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*",
+          "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\*"
+      )
+
+      $software = Get-ItemProperty $uninstallPaths -ErrorAction SilentlyContinue |
+          Where-Object { $_.DisplayName -like "*$SoftwareName*" } |
+          Select-Object DisplayName, DisplayVersion, UninstallString, QuietUninstallString -First 1
+
+      if (-not $software) {
+          Write-Output "Software nicht gefunden: $SoftwareName"
+          $Ansible.Result = @{
+              changed = $false
+              found   = $false
+              name    = $SoftwareName
+          }
+          exit 0
+      }
+
+      $uninstallCmd = $software.QuietUninstallString
+      if ([string]::IsNullOrWhiteSpace($uninstallCmd)) {
+          $uninstallCmd = $software.UninstallString
+      }
+
+      if ([string]::IsNullOrWhiteSpace($uninstallCmd)) {
+          throw "Kein UninstallString oder QuietUninstallString gefunden für $($software.DisplayName)"
+      }
+
+      function Invoke-UninstallString {
+          param (
+              [string]$Command
+          )
+
+          $Command = $Command.Trim()
+
+          if ($Command -match '^(msiexec(\.exe)?)(\s+.*)?$') {
+              $args = $Matches[3]
+
+              if ($args -notmatch '/x') {
+                  $args = $args -replace '/I', '/X'
+                  $args = $args -replace '/i', '/X'
+              }
+
+              if ($args -notmatch '/quiet|/qn|/passive') {
+                  $args += ' /qn /norestart'
+              }
+
+              $proc = Start-Process -FilePath "msiexec.exe" -ArgumentList $args -Wait -PassThru -NoNewWindow
+              return $proc.ExitCode
+          }
+          else {
+              if ($Command.StartsWith('"')) {
+                  $exe  = ($Command -split '"')[1]
+                  $args = $Command.Substring($exe.Length + 2).Trim()
+              }
+              else {
+                  $parts = $Command -split ' ', 2
+                  $exe   = $parts[0]
+                  $args  = if ($parts.Count -gt 1) { $parts[1] } else { "" }
+              }
+
+              $proc = Start-Process -FilePath $exe -ArgumentList $args -Wait -PassThru -NoNewWindow
+              return $proc.ExitCode
+          }
+      }
+
+      $exitCode = Invoke-UninstallString -Command $uninstallCmd
+
+      if ($exitCode -ne 0) {
+          throw "Deinstallation fehlgeschlagen. ExitCode: $exitCode"
+      }
+
+      $Ansible.Result = @{
+          changed         = $true
+          found           = $true
+          display_name    = $software.DisplayName
+          display_version = $software.DisplayVersion
+          uninstall_cmd   = $uninstallCmd
+          exit_code       = $exitCode
+      }
+    parameters:
+      SoftwareName: "Adobe Acrobat"
+  register: uninstall_result
+  when: detect_before.rc == 0
+
+- name: Detect installation after registry uninstall
+  win_shell: >
+    powershell.exe -ExecutionPolicy Bypass -File
+    "{{ package_source_path }}\detect-installation.ps1"
+  register: detect_after_registry
+  failed_when: detect_after_registry.rc not in [0, 1]
+  when: detect_before.rc == 0
+
+- name: Create destination folder
+  win_file:
+    path: "{{ package_source_path }}"
+    state: directory
+  when:
+    - detect_before.rc == 0
+    - detect_after_registry is defined
+    - detect_after_registry.rc == 0
+
+- name: Copy selected PSADT items except Files
+  win_copy:
+    src: "{{ item }}"
+    dest: "{{ package_source_path }}\\"
+  loop:
+    - files/Assets
+    - files/Config
+    - files/PSAppDeployToolkit
+    - files/PSAppDeployToolkit.Extensions
+    - files/Strings
+    - files/SupportFiles
+    - files/COPYING.Lesser
+    - files/Invoke-AppDeployToolkit.exe
+    - files/Invoke-AppDeployToolkit.ps1
+  when:
+    - detect_before.rc == 0
+    - detect_after_registry is defined
+    - detect_after_registry.rc == 0
 
 - name: Starte PSADT silent Uninstall
   win_shell: |
     & "{{ package_source_path }}\Invoke-AppDeployToolkit.exe" `
       -DeploymentType Uninstall `
       -DeployMode Silent
-  register: deploy_result
-  failed_when: deploy_result.rc not in [0, 3010]
-  when: deploy_result == 0
+  register: psadt_result
+  failed_when: psadt_result.rc not in [0, 3010]
+  when:
+    - detect_before.rc == 0
+    - detect_after_registry is defined
+    - detect_after_registry.rc == 0
 
-- name: Detect installation after uninstall
+- name: Detect installation after PSADT uninstall
   win_shell: >
     powershell.exe -ExecutionPolicy Bypass -File
     "{{ package_source_path }}\detect-installation.ps1"
-  register: detect_after
-  failed_when: detect_after.rc not in [0, 1]
-  when: deploy_result == 0
+  register: detect_final
+  failed_when: detect_final.rc not in [0, 1]
+  when:
+    - detect_before.rc == 0
+    - detect_after_registry is defined
+    - detect_after_registry.rc == 0
 
 - name: Show installation result
   debug:
@@ -35,4 +170,22 @@
       'deinstalliert' if detect_after.rc == 1
       else 'noch installiert'
       }}.
-  when: deploy_result == 0
+  when:
+    - detect_after is defined
+    - detect_after.rc is defined
+
+- name: Show installation result when registry uninstall already succeeded
+  debug:
+    msg: "Adobe Reader ist deinstalliert."
+  when:
+    - detect_before.rc == 0
+    - detect_after_registry is defined
+    - detect_after_registry.rc == 1
+
+- name: Show installation result when Adobe was not installed
+  debug:
+    msg: "Adobe Reader war bereits nicht installiert."
+  when:
+    - detect_before.rc == 0
+    - detect_after_registry is defined
+    - detect_after_registry.rc == 1
