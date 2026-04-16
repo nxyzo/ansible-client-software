@@ -1,6 +1,20 @@
 ---
 # tasks file for win-adobereader
 
+- name: Create local package repository
+  win_file:
+    path: "{{ package_source_path }}"
+    state: directory
+  when: (deployment_type) == 'install' 
+  tags: [install]
+
+- name: Create local package repository
+  win_file:
+    path: "{{ package_source_path }}"
+    state: directory
+  when: (deployment_type) == 'uninstall'
+  tags: [uninstall]
+
 - name: Repair
   include_tasks: repair.yml
   when: (deployment_type) == 'repair'
@@ -10,13 +24,6 @@
   include_tasks: uninstall.yml
   when: (deployment_type) == 'uninstall'
   tags: [uninstall]
-
-- name: Create local package repository
-  win_file:
-    path: "{{ package_source_path }}"
-    state: directory
-  when: (deployment_type) == 'install'
-  tags: [install]
 
 - name: Install
   include_tasks: install.yml
