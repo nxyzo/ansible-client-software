@@ -52,7 +52,7 @@ Get installation files
 ----------------------
 
 To obtain the Mozilla Firefox installer, navigate to the official Firefox download page:  
-https://www.mozilla.org/en-US/firefox/all/
+https://www.mozilla.org/de-de/firefox/all/
 
 Download the installer in the required format and architecture, and copy it to the corresponding directory:
 
