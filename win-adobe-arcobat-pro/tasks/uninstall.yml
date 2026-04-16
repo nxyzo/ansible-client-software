@@ -2,13 +2,13 @@
 
 - name: Generate detect-installation script
   template:
-    src: detect-installation.ps1.j2
-    dest: "{{ package_source_path }}\\detect-installation.ps1"
+    src: detect-installation-uninstall.ps1.j2
+    dest: "{{ package_source_path }}\\detect-installation-uninstall.ps1"
 
 - name: Detect installation before uninstall
   win_shell: >
     powershell.exe -ExecutionPolicy Bypass -File
-    "{{ package_source_path }}\detect-installation.ps1"
+    "{{ package_source_path }}\detect-installation-uninstall.ps1"
   register: detect_before
   failed_when: detect_before.rc not in [0, 1]
 
@@ -107,7 +107,7 @@
 - name: Detect installation after registry uninstall
   win_shell: >
     powershell.exe -ExecutionPolicy Bypass -File
-    "{{ package_source_path }}\detect-installation.ps1"
+    "{{ package_source_path }}\detect-installation-uninstall.ps1"
   register: detect_after_registry
   failed_when: detect_after_registry.rc not in [0, 1]
   when: detect_before.rc == 0
@@ -155,7 +155,7 @@
 - name: Detect installation after PSADT uninstall
   win_shell: >
     powershell.exe -ExecutionPolicy Bypass -File
-    "{{ package_source_path }}\detect-installation.ps1"
+    "{{ package_source_path }}\detect-installation-uninstall.ps1"
   register: detect_final
   failed_when: detect_final.rc not in [0, 1]
   when:
