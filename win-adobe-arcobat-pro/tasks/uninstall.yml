@@ -13,7 +13,7 @@
   failed_when: detect_before.rc not in [0, 1]
 
 - name: Deinstalliere Software per Registry-UninstallString
-  win_powershell:
+  ansible.windows.win_powershell:
     script: |
       param(
           [string]$SoftwareName
