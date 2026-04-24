@@ -1,6 +1,6 @@
 ---
 # defaults file for win-adobe-reader
-latest_version: "26.1.21431.0"
+latest_version: "26.1.21483.0"
 
 adobe_reader_product_name: "Acrobat Reader"
 adobe_reader_version: "DC"
