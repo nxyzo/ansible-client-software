@@ -1,4 +1,4 @@
 ---
 # tasks file for win-firefox
 # set the latest version of the software here
-latest_version: "149.0.2"
+latest_version: "150.0.1"
