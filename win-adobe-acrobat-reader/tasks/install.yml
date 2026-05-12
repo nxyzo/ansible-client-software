@@ -64,7 +64,7 @@
   failed_when: detect_after.rc != 0
 
 - name: Set Adobe Reader enterprise baseline under HKLM policies
-  ansible.windows.win_regedit:
+  win_regedit:
     path: "{{ item.path }}"
     name: "{{ item.name }}"
     data: "{{ item.data }}"
