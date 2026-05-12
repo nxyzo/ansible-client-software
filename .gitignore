@@ -11,3 +11,4 @@ Transforms/
 !Invoke-AppDeployToolkit.exe
 !Deploy-Application.exe
 win-office365
+win-capcut
